@@ -1,0 +1,38 @@
+version: '3'
+
+env:
+  DOCKER_IMAGE_NAME: sbs-scraper-makelinux
+  DOCKER_IMAGE: kvdomingo/sbs-scraper-makelinux:latest
+
+tasks:
+  build-builder:
+    desc: Build builder image
+    cmds:
+      - docker build -t $DOCKER_IMAGE .
+
+  publish-builder:
+    desc: Push builder image
+    cmds:
+      - docker push $DOCKER_IMAGE
+
+  make-builder:
+    desc: Build and push builder image
+    cmds:
+      - task build-builder
+      - task publish-builder
+
+  build:
+    desc: Build standalone (machine env)
+    cmds:
+      - poetry run python -m nuitka --output-dir=build --onefile ./sbs_image_scraper
+
+  build-linux:
+    desc: Build standalone Linux
+    cmds:
+      - docker run -v "$(pwd)":/sbs --rm --name $DOCKER_IMAGE_NAME $DOCKER_IMAGE
+
+  build-all:
+    desc: Build standalone all
+    cmds:
+      - task build
+      - task build-linux
