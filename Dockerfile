@@ -10,7 +10,7 @@ ENV PIP_DEFAULT_TIMEOUT 100
 ENV POETRY_VERSION 1.1.13
 ENV VERSION $VERSION
 
-RUN apt-get update && apt-get install gcc patchelf -y
+RUN apt-get update && apt-get install upx-ucl -y
 
 RUN pip install "poetry==$POETRY_VERSION"
 

@@ -18,8 +18,7 @@ from tqdm import tqdm
 def main(board_number: int):
     options = Options()
     options.headless = True
-    options.log = False
-    driver = Firefox(options=options)
+    driver = Firefox(options=options, log_path=os.devnull, service_log_path=os.devnull)
     driver.get(f"https://programs.sbs.co.kr/enter/gayo/visualboard/54795?cmd=view&page=1&board_no={board_number}")
     try:
         WebDriverWait(driver, 10).until(presence_of_all_elements_located((By.CLASS_NAME, "aba_img")))

@@ -24,7 +24,7 @@ tasks:
   build:
     desc: Build standalone (machine env)
     cmds:
-      - poetry run python -m nuitka --output-dir=build --onefile ./sbs_image_scraper
+      - poetry run pyinstaller -F --clean --name sbs-scraper setup.py
 
   build-linux:
     desc: Build standalone Linux
